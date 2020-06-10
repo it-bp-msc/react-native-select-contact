@@ -1,5 +1,7 @@
 # react-native-select-contact
 
+## IT∆BP
+
 Originally branched from [react-native-contacts-wrapper](https://github.com/LynxITDigital/react-native-contacts-wrapper)
 
 This is a simple wrapper for the native iOS and Android Contact Picker UIs, with some optional help for selecting specific fields from the contact.
@@ -11,11 +13,13 @@ yarn add react-native-select-contact
 ```
 
 For React Native => 0.59 only:
+
 ```
 react-native link react-native-select-contact
 ```
 
 Make sure your manifest files includes permission to read contacts
+
 ```
 <uses-permission android:name="android.permission.READ_CONTACTS" />
 ```
@@ -31,12 +35,12 @@ selectContactEmail(): Promise<ContactEmailSelection | null>;
 selectContactPostalAddress(): Promise<ContactPostalAddressSelection | null>;
 ```
 
-These methods all open up a separate ViewController (on IOS) or Activity (on Android) to select a contact.  See Types below.
+These methods all open up a separate ViewController (on IOS) or Activity (on Android) to select a contact. See Types below.
 
 For `selectContactPhone`, `selectContactEmail`, or `selectContactPostalAddress`, if there are more than one phone or email, an `ActionSheetIOS` is
 shown for IOS, and the first entry is returned for Android.
 
-A return value `null` may be because the user cancelled the contact selection.  You shouldn't need to worry about doing
+A return value `null` may be because the user cancelled the contact selection. You shouldn't need to worry about doing
 anything if the promise resolves to `null`.
 
 #### Optional Android ActionSheet
@@ -48,6 +52,7 @@ yarn add react-native-action-sheet
 ```
 
 For React Native => 0.59 only:
+
 ```
 react-native link react-native-action-sheet
 ```
@@ -59,66 +64,64 @@ when there are more than one phone number or email on a selected contact.
 
 ```typescript
 interface PhoneEntry {
-    number: string,
-    type: string
+  number: string;
+  type: string;
 }
 
 interface EmailEntry {
-    address: string,
-    type: string
+  address: string;
+  type: string;
 }
 
 interface AddressEntry {
-    formattedAddress: string, // android only
-    type: string, // android only
-    street: string,
-    city: string,
-    state: string,
-    postalCode: string,
-    isoCountryCode: string
+  formattedAddress: string; // android only
+  type: string; // android only
+  street: string;
+  city: string;
+  state: string;
+  postalCode: string;
+  isoCountryCode: string;
 }
 
 interface Contact {
-    name: string,
-    phones: PhoneEntry[],
-    emails: EmailEntry[],
-    postalAddresses: AddressEntry[]
+  name: string;
+  phones: PhoneEntry[];
+  emails: EmailEntry[];
+  postalAddresses: AddressEntry[];
 }
 
 interface ContactPhoneSelection {
-    contact: Contact,
-    selectedPhone: PhoneEntry
+  contact: Contact;
+  selectedPhone: PhoneEntry;
 }
 
 interface ContactEmailSelection {
-    contact: Contact,
-    selectedEmail: EmailEntry
+  contact: Contact;
+  selectedEmail: EmailEntry;
 }
 
 interface ContactPostalAddressSelection {
-    contact: Contact,
-    selectedAddress: AddressEntry
+  contact: Contact;
+  selectedAddress: AddressEntry;
 }
 ```
 
 ### Example
 
 ```javascript
-
-import { selectContactPhone } from 'react-native-select-contact';
+import { selectContactPhone } from "react-native-select-contact";
 
 function getPhoneNumber() {
-    return selectContactPhone()
-        .then(selection => {
-            if (!selection) {
-                return null;
-            }
-            
-            let { contact, selectedPhone } = selection;
-            console.log(`Selected ${selectedPhone.type} phone number ${selectedPhone.number} from ${contact.name}`);
-            return selectedPhone.number;
-        });  
+  return selectContactPhone().then((selection) => {
+    if (!selection) {
+      return null;
+    }
+
+    let { contact, selectedPhone } = selection;
+    console.log(
+      `Selected ${selectedPhone.type} phone number ${selectedPhone.number} from ${contact.name}`
+    );
+    return selectedPhone.number;
+  });
 }
-
-
 ```
